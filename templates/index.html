@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Background Remover API Demo</title>
+</head>
+<body>
+    <h2>Remove Background from Image</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="image" id="imageInput" required>
+        <button type="submit">Upload & Remove Background</button>
+    </form>
+    <br>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileInput = document.getElementById('imageInput');
+            formData.append('image', fileInput.files[0]);
+
+            const response = await fetch('/remove-bg', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            const resultDiv = document.getElementById('result');
+            if (result.image_url) {
+                resultDiv.innerHTML = `
+                    <p>Image with background removed:</p>
+                    <a href="${result.image_url}" target="_blank">${result.image_url}</a><br>
+                    <img src="${result.image_url}" style="max-width:300px; margin-top:10px;">
+                `;
+            } else {
+                resultDiv.innerHTML = `<p>Error: ${result.error}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
