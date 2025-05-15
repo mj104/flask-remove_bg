@@ -12,9 +12,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def home():
     return render_template('index.html')
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Default to 5000 if PORT not set
-    app.run(host='0.0.0.0', port=port)
+
 
 @app.route('/remove-bg', methods=['POST'])
 def remove_bg():
