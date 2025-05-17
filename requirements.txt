@@ -1,5 +1,1 @@
-flask
-rembg
-pillow
-gunicorn
-onnxruntime
+appwrite
